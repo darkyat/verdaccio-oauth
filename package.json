@@ -1,0 +1,40 @@
+{
+  "name": "verdaccio-oauth",
+  "version": "1.0.0",
+  "description": "OAuth2 plugin for Verdaccio",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "babel src -d dist",
+    "build:watch": "npm run build -- -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Slowki/verdaccio-oauth.git"
+  },
+  "keywords": [
+    "verdaccio",
+    "oauth"
+  ],
+  "files": [
+    "dist"
+  ],
+  "author": "Stephan Wolski (https://github.com/Slowki)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Slowki/verdaccio-oauth/issues"
+  },
+  "homepage": "https://github.com/Slowki/verdaccio-oauth#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "express-session": "^1.15.6",
+    "grant-express": "^4.1.2"
+  },
+  "devDependencies": {
+    "@verdaccio/types": "^3.4.3",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-flow": "^6.23.0",
+    "flow-bin": "^0.76.0"
+  }
+}

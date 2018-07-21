@@ -1,0 +1,15 @@
+[ignore]
+./node_modules
+
+[include]
+
+[libs]
+node_modules/@verdaccio/types/lib/
+
+[lints]
+
+[options]
+esproposal.export_star_as=enable
+suppress_comment=\\(.\\|\n\\)*\\$FlowExpectedError
+
+[strict]
