@@ -15,6 +15,8 @@ import type {
     PluginOptions,
 } from '@verdaccio/types'
 
+import getUsername from './getUsername'
+
 class OAuthPlugin implements IPluginAuth, IPluginMiddleware {
     static CALLBACK_URL: string
 
@@ -37,6 +39,13 @@ class OAuthPlugin implements IPluginAuth, IPluginMiddleware {
     }
 
     register_middlewares(app: any, auth: IBasicAuth, storage: IStorageManager): void {
+        if (!this.config.scope)
+            this.config.scope = []
+
+        if (this.config.provider === 'google')
+            // For Google the username is derived from their email address
+            this.config.scope.push('userinfo.email')
+
         const grantConfig = {
             server: {
                 protocol: this.url.protocol.replace(/:+$/, ''),
@@ -48,19 +57,20 @@ class OAuthPlugin implements IPluginAuth, IPluginMiddleware {
             [this.config.provider]: {
                 key: this.config.key || this.config.client_id,
                 secret: this.config.secret || this.config.client_secret,
-                scope: this.config.scope || []
+                scope: this.config.scope
             }
         }
 
         app.use(session({secret: 'grant', saveUninitialized: true, resave: true}))
         app.use(grant(grantConfig))
-        app.get(OAuthPlugin.CALLBACK_URL, (req, res) => {
-            const name = 'Unknown' // TODO get name
+        app.get(OAuthPlugin.CALLBACK_URL, async (req, res) => {
+            const name = (await getUsername(this.config.provider, req.query.access_token)) || 'Unknown'
             const jwt = auth.issueUIjwt({
                 name
             })
+
             res.contentType('text/html')
-            console.log(jwt)
+
             // This is a hack to pass the right information back to Verdaccio's SPA
             res.send(`
                 <script>

@@ -27,10 +27,11 @@
   "dependencies": {
     "express": "^4.16.3",
     "express-session": "^1.15.6",
-    "grant-express": "^4.1.2"
+    "grant-express": "^4.1.2",
+    "node-fetch": "^2.2.0"
   },
   "devDependencies": {
-    "@verdaccio/types": "^3.4.3",
+    "@verdaccio/types": "^3.5.1",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
